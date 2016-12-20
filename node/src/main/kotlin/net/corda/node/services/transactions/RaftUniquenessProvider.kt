@@ -136,7 +136,7 @@ class RaftUniquenessProvider(storagePath: Path, myAddress: HostAndPort, clusterA
     fun stop(): CompletableFuture<Void> {
         val future = CompletableFuture<Void>()
         client.close().whenComplete({ clientResult, clientError ->
-            server.shutdown().whenComplete({ serverResult, serverError ->
+            server.leave().whenComplete({ serverResult, serverError ->
                 if (clientError != null) {
                     future.completeExceptionally(clientError)
                 } else if (serverError != null) {
